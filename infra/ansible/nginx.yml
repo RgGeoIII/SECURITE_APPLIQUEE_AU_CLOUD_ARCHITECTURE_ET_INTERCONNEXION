@@ -1,0 +1,22 @@
+---
+- name: installation of Engine-X
+  hosts: web
+  become: true
+  tasks:
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Start and enable Nginx service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Update Landing Page
+      copy:
+        content: "<body><h1>jean neymar</h1></body>"
+        dest: /var/www/html/index.html
+        
