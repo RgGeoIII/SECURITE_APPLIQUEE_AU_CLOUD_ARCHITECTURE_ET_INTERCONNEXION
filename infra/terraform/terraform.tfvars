@@ -1,0 +1,3 @@
+vpc_id           = "vpc-0ebcdb39f7a526ef9"
+vm_image         = "ami-0e207c18bb303cc68"
+vm_instance_type = "t3.micro"
