@@ -1,0 +1,41 @@
+# Bastion
+aws ec2 run-instances --region eu-west-3 \
+  --image-id ami-05dfcc4b49790367c \
+  --instance-type t2.micro \
+  --key-name cle-td-geogeo \
+  --subnet-id subnet-0b262aa3958b5b1b6 \
+  --associate-public-ip-address \
+  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=geogeobastion}]" \
+  --count 1 \
+  --query "Instances[0].InstanceId"
+
+# Cible
+aws ec2 run-instances --region eu-west-3 \
+  --image-id ami-05dfcc4b49790367c \
+  --instance-type t2.micro \
+  --key-name cle-td-geogeo \
+  --subnet-id subnet-0b262aa3958b5b1b6 \
+  --no-associate-public-ip-address \
+  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=geogeocible}]" \
+  --count 1 \
+  --query "Instances[0].InstanceId"
+
+
+---- SG ----
+
+
+ # Créer sg-bastion
+aws ec2 create-security-group --region eu-west-3 \
+  --group-name geogeobastion-sg \
+  --description "SG bastion Geoffrey" \
+  --vpc-id vpc-0ebcdb39f7a526ef9 \
+  --query "GroupId"
+
+# Créer sg-cible
+aws ec2 create-security-group --region eu-west-3 \
+  --group-name geogeocible-sg \
+  --description "SG cible Geoffrey" \
+  --vpc-id vpc-0ebcdb39f7a526ef9 \
+  --query "GroupId"
+"sg-0983edf6239bf98fb"
+"sg-0f8ac93647b7e9865"

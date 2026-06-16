@@ -1,4 +1,22 @@
 ---
 - name: Installation of Engine-X
   hosts: web
-  become
+  become: true
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: true
+
+    - name: Start nginx
+      systemd:
+        name: nginx
+        state: started
+        enabled: true
+        daemon_reload: true
+
+    - name: Update Landing Page
+      copy:
+        content: "<body><h1>Chez Geoffrey ça zoom fort</h1><body/>"
+        dest: /var/www/html/index.nginx-debian.html
