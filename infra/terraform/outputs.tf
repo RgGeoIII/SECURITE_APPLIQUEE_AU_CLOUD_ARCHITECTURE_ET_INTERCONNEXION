@@ -1,4 +1,8 @@
-output "vm_ip_public" {
+output "bastion_public_ip" {
   value = aws_instance.boris-serverwebludo.public_ip
-
 }
+
+output "cible_private_ip" {
+  value = aws_instance.td_cible.private_ip
+}
+
