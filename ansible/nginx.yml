@@ -1,0 +1,4 @@
+---
+- name: Installation of Engine-X
+  hosts: web
+  become
