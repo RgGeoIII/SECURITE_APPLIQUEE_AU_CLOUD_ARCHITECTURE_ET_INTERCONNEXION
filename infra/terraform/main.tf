@@ -62,7 +62,7 @@ resource "aws_instance" "boris-serverwebludo" {
 
 resource "aws_security_group" "sg_bastion" {
   name   = "bastion-ludo"
-  vpc_id = var.vpc_id
+  vpc_id = data.aws_vpc.default.id
 
   ingress {
     description = "SSH depuis mon IP"
@@ -87,7 +87,7 @@ resource "aws_security_group" "sg_bastion" {
 
 resource "aws_security_group" "sg_cible" {
   name   = "cible-ludo"
-  vpc_id = var.vpc_id
+  vpc_id = data.aws_vpc.default.id
 
   ingress {
     description     = "SSH depuis le bastion"
@@ -123,7 +123,7 @@ resource "aws_instance" "td_cible" {
   instance_type               = var.vm_instance_type
   associate_public_ip_address = false
   vpc_security_group_ids      = [aws_security_group.sg_cible.id]
-  subnet_id                   = aws_subnet.boris-servers-subnet.id
+  subnet_id                   = aws_subnet.private.id
 
   tags = {
     Name = "td-cible-ludo"

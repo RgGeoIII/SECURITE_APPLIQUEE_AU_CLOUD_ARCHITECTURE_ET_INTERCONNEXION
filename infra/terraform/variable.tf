@@ -26,3 +26,7 @@ variable "my_ip" {
   type        = string
   description = "Adresse IP publique autorisée pour SSH, format x.x.x.x/32"
 }
+variable "student_id" {
+  type        = number
+  description = "Numero etudiant entre 0 et 99 pour rendre les ressources uniques"
+}
