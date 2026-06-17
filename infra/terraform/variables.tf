@@ -1,26 +1,26 @@
 variable "aws_region" {
-    type = string
-    description = "region par default"
-    default = "eu-west-3"
+  type        = string
+  description = "region par default"
+  default     = "eu-west-3"
 
 }
 
 variable "vpc_id" {
-    type = string
-    description = "vpc id"
+  type        = string
+  description = "vpc id"
 
 }
 
 variable "vm_image" {
-    type = string
-    description = "ami for vms"
+  type        = string
+  description = "ami for vms"
 
 }
 
 variable "vm_instance_type" {
-    type = string
-    description = "instance type for vms"
-    default = "t2.micro"
+  type        = string
+  description = "instance type for vms"
+  default     = "t2.micro"
 }
 
 variable "my_ip" {
@@ -30,5 +30,5 @@ variable "my_ip" {
 
 variable "key_name" {
   type    = string
-  default = "cle-td"
+  default = "cle-xavier"
 }
