@@ -2,7 +2,7 @@ provider "aws" {
     region = var.aws_region
 }
 
-# Security Group : Bastion
+# Security Group : Bastion (TD1 + TD2)
 resource "aws_security_group" "xavier-bastion-sg" {
     name        = "xavier-bastion-sg"
     description = "SSH depuis mon IP uniquement"
@@ -16,10 +16,10 @@ resource "aws_security_group" "xavier-bastion-sg" {
     }
 
     ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+        from_port   = 80
+        to_port     = 80
+        protocol    = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
     }
 
     egress {
@@ -30,7 +30,7 @@ resource "aws_security_group" "xavier-bastion-sg" {
     }
 }
 
-# Security Group : Cible
+# Security Group : Cible (TD1)
 resource "aws_security_group" "xavier-cible-sg" {
     name        = "xavier-cible-sg"
     description = "SSH et ICMP uniquement depuis le bastion"
@@ -58,7 +58,7 @@ resource "aws_security_group" "xavier-cible-sg" {
     }
 }
 
-# Sous-réseau
+# Sous-réseau public (TD1)
 resource "aws_subnet" "xavier-subnet" {
     vpc_id     = var.vpc_id
     cidr_block = "172.31.190.0/24"
@@ -68,7 +68,7 @@ resource "aws_subnet" "xavier-subnet" {
     }
 }
 
-# Instance Bastion (IP publique)
+# Instance Bastion (IP publique) — TD1
 resource "aws_instance" "xavier-bastion" {
     ami                         = var.vm_image
     instance_type               = var.vm_instance_type
@@ -82,7 +82,7 @@ resource "aws_instance" "xavier-bastion" {
     }
 }
 
-# Instance Cible (sans IP publique)
+# Instance Cible (sans IP publique) — TD1
 resource "aws_instance" "xavier-cible" {
     ami                         = var.vm_image
     instance_type               = var.vm_instance_type
@@ -96,12 +96,11 @@ resource "aws_instance" "xavier-cible" {
     }
 }
 
-# NACL xavier-nacl
+# NACL xavier-nacl — TD1
 resource "aws_network_acl" "xavier-nacl" {
     vpc_id     = var.vpc_id
     subnet_ids = [aws_subnet.xavier-subnet.id]
 
-    # Règle entrante n°100 : allow SSH depuis mon IP
     ingress {
         rule_no    = 100
         protocol   = "tcp"
@@ -112,15 +111,14 @@ resource "aws_network_acl" "xavier-nacl" {
     }
 
     ingress {
-    rule_no    = 110
-    protocol   = "tcp"
-    from_port  = 80
-    to_port    = 80
-    cidr_block = "0.0.0.0/0"
-    action     = "allow"
+        rule_no    = 110
+        protocol   = "tcp"
+        from_port  = 80
+        to_port    = 80
+        cidr_block = "0.0.0.0/0"
+        action     = "allow"
     }
 
-    # Règle entrante n°200 : ports éphémères (réponses apt update)
     ingress {
         rule_no    = 200
         protocol   = "tcp"
@@ -130,7 +128,6 @@ resource "aws_network_acl" "xavier-nacl" {
         action     = "allow"
     }
 
-    # Règle sortante n°90 : HTTP pour apt update
     egress {
         rule_no    = 90
         protocol   = "tcp"
@@ -140,7 +137,6 @@ resource "aws_network_acl" "xavier-nacl" {
         action     = "allow"
     }
 
-    # Règle sortante n°91 : HTTPS pour apt update
     egress {
         rule_no    = 91
         protocol   = "tcp"
@@ -150,7 +146,6 @@ resource "aws_network_acl" "xavier-nacl" {
         action     = "allow"
     }
 
-    # Règle sortante n°100 : ports éphémères (trafic retour SSH)
     egress {
         rule_no    = 100
         protocol   = "tcp"
