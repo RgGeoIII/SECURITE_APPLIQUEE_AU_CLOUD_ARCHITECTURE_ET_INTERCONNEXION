@@ -15,7 +15,7 @@
         enabled: true
     - name: Create index.html with a welcome message
       copy:
-        dest: /var/www/html
+        dest: /var/www/html/index.html
         content: "Welcome to my Ansible-built Apache server!"
         owner: root
         group: root
