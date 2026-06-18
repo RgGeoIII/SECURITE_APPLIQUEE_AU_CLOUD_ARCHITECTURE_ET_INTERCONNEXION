@@ -1,0 +1,18 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+
+# Variables sensibles
+*.tfvars
+*.tfvars.json
+
+# Logs
+*.log
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+.terraform.lock.hcl
