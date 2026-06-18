@@ -1,0 +1,36 @@
+{
+    "NetworkAcl": {
+        "Associations": [],
+        "Entries": [
+            {
+                "CidrBlock": "0.0.0.0/0",
+                "Egress": true,
+                "IcmpTypeCode": {},
+                "PortRange": {},
+                "Protocol": "-1",
+                "RuleAction": "deny",
+                "RuleNumber": 32767
+            },
+            {
+                "CidrBlock": "0.0.0.0/0",
+                "Egress": false,
+                "IcmpTypeCode": {},
+                "PortRange": {},
+                "Protocol": "-1",
+                "RuleAction": "deny",
+                "RuleNumber": 32767
+            }
+        ],
+        "IsDefault": false,
+        "NetworkAclId": "acl-07541628a70d68d60",
+        "Tags": [
+            {
+                "Key": "Name",
+                "Value": "are u there"
+            }
+        ],
+        "VpcId": "vpc-0ebcdb39f7a526ef9",
+        "OwnerId": "747082607185"
+    },
+    "ClientToken": "c512e2de-9b69-4779-a81e-3733bbed9f27"
+}
