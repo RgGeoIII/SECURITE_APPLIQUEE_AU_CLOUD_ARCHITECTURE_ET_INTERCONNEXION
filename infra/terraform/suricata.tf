@@ -1,3 +1,5 @@
+# ── TD2 : Sonde Suricata (IDS) via user_data ─────────────────────────
+
 # Security Group : sonde Suricata
 resource "aws_security_group" "td2-sonde-sg" {
     name        = "td2-27-sg-sonde"
@@ -32,7 +34,7 @@ resource "aws_security_group" "td2-sonde-sg" {
     }
 }
 
-# installation suricata automatique
+# Instance Suricata — installée automatiquement via user_data
 resource "aws_instance" "td2-sonde" {
     ami                         = data.aws_ami.ubuntu.id
     instance_type               = var.vm_instance_type
@@ -47,8 +49,13 @@ resource "aws_instance" "td2-sonde" {
         add-apt-repository -y ppa:oisf/suricata-stable
         apt-get update && apt-get install -y suricata
         suricata-update
+
+        # Correction : l'interface réseau sur AWS est ens5 et non eth0
+        sed -i 's/interface: eth0/interface: ens5/g' /etc/suricata/suricata.yaml
+
         echo 'alert icmp any any -> $HOME_NET any (msg:"TD2 ICMP detecte"; sid:1000001; rev:1;)' \
             >> /var/lib/suricata/rules/suricata.rules
+
         systemctl enable suricata
         systemctl restart suricata
     EOT
